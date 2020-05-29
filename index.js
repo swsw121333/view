@@ -40,7 +40,7 @@ client.on('message', (message) => {
 
   if(message.content == '!si') {
     let embed = new Discord.RichEmbed()
-    let img = 'https://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
+    let img = ''https://images-ext-2.discordapp.net/external/P49xUgnJUVq4pC0GPz-M0OQlwM5G2_fdx8kEE17q0Qs/https/d2v80xjmx68n4w.cloudfront.net/gigs/cbjr21565491229.jpg?width=400&height=2991;
     var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
     embed.setColor('#186de6')
     embed.setAuthor('server info of 문이봇 BOT', img)
