@@ -97,7 +97,7 @@ client.on('message', (message) => {
       {name: '!전체공지', desc: '흔이 쓰는 DM 공지입니다. embed X'},
       {name: '!전체공지2', desc: '샵 사장님들이 가장 많이쓰시는 embed 형식의 공지입니다. 디자인되서 디엠전송이 됩니다'},
       {name: '!청소', desc: '텍스트를 삭제합니다'},
-      {name: '!초대코드', desc: '이 샵에 초대코드를 표시합니다'},
+      {name: '!초대코드', desc: '이 서버에 초대코드를 표시합니다'},
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
