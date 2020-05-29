@@ -90,14 +90,14 @@ client.on('message', (message) => {
   } else if(message.content == '!help') {
     let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
     let commandList = [
-      {name: '!help', desc: 'help'},
-      {name: 'ping', desc: '현재 핑 상태'},
-      {name: 'embed', desc: 'embed 예제1'},
-      {name: '!전체공지', desc: 'dm으로 전체 공지 보내기'},
-      {name: '!전체공지2', desc: 'dm으로 전체 embed 형식으로 공지 보내기'},
-      {name: '!청소', desc: '텍스트 지움'},
-      {name: '!초대코드', desc: '해당 채널의 초대 코드 표기'},
-      {name: '!초대코드2', desc: '봇이 들어가있는 모든 채널의 초대 코드 표기'},
+      {name: '관리자를 위한 도움말', desc: '!help를 처보세요!'},
+      {name: '!help', desc: '봇 도움말'},
+      {name: 'ping', desc: '봇 핑 상태(현재 봇의 핑 (응답속도를)나타내요'},
+      {name: 'embed', desc: 'embed 예제1(전체공지2 할때 embed 형식 예제입니다'},
+      {name: '!전체공지', desc: '흔이 쓰는 DM 공지입니다. embed X'},
+      {name: '!전체공지2', desc: '샵 사장님들이 가장 많이쓰시는 embed 형식의 공지입니다. 디자인되서 디엠전송이 됩니다'},
+      {name: '!청소', desc: '텍스트를 삭제합니다'},
+      {name: '!초대코드', desc: '이 샵에 초대코드를 표시합니다'},
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
