@@ -36,11 +36,11 @@ client.on('message', (message) => {
   }
 
   if(message.content == 'embed') {
-    let img = 'https://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
+    let img = 'https://images-ext-2.discordapp.net/external/P49xUgnJUVq4pC0GPz-M0OQlwM5G2_fdx8kEE17q0Qs/https/d2v80xjmx68n4w.cloudfront.net/gigs/cbjr21565491229.jpg?width=400&height=299';
     let embed = new Discord.RichEmbed()
       .setTitle('타이틀')
       .setURL('http://www.naver.com')
-      .setAuthor('나긋해', img, 'http://www.naver.com')
+      .setAuthor('! MOON 문이', img, 'http://www.naver.com')
       .setThumbnail(img)
       .addBlankField()
       .addField('Inline field title', 'Some value here')
@@ -50,7 +50,7 @@ client.on('message', (message) => {
       .addField('Inline field title', 'Some value here1\nSome value here2\nSome value here3\n')
       .addBlankField()
       .setTimestamp()
-      .setFooter('! MOON 문이가 만듬, img
+      .setFooter('! MOON 문이', img)
 
     message.channel.send(embed)
   } else if(message.content == 'embed2') {
@@ -63,9 +63,9 @@ client.on('message', (message) => {
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
-      .setAuthor('Help of 콜라곰 BOT', helpImg)
+      .setAuthor('Help of 문이봇 BOT', helpImg)
       .setColor('#186de6')
-      .setFooter(`콜라곰 BOT ❤️`)
+      .setFooter(`문이봇 BOT ❤️`)
       .setTimestamp()
     
     commandList.forEach(x => {
