@@ -3,6 +3,8 @@ const client = new Discord.Client();
 const token = process.argv.length == 2 ? process.env.token : "";
 const moment = require("moment");
 require("moment-duration-format");
+const momenttz = require('moment-timezone');
+const MessageAdd = require('./db/message_add.js')
 const welcomeChannelName = "안녕하세요";
 const byeChannelName = "안녕히가세요";
 const welcomeChannelComment = "어서오세요.";
@@ -10,7 +12,7 @@ const byeChannelComment = "안녕히가세요.";
 
 client.on('ready', () => {
   console.log('켰다.');
-  client.user.setPresence({ game: { name: '무언가를' }, status: 'online' })
+  client.user.setPresence({ game: { name: '!help를 쳐보세요.' }, status: 'online' })
 });
 
 client.on("guildMemberAdd", (member) => {
@@ -31,7 +33,12 @@ client.on("guildMemberRemove", (member) => {
   byeChannel.send(`<@${deleteUser.id}> ${byeChannelComment}\n`);
 });
 
+client.on("messageUpdate", (message) => {
+  MessageSave(message, true)
+});
+
 client.on('message', (message) => {
+  MessageSave(message)
   if(message.author.bot) return;
 
   if(message.content == 'ping') {
@@ -40,11 +47,11 @@ client.on('message', (message) => {
 
   if(message.content == '!si') {
     let embed = new Discord.RichEmbed()
-    let img = ''https://images-ext-2.discordapp.net/external/P49xUgnJUVq4pC0GPz-M0OQlwM5G2_fdx8kEE17q0Qs/https/d2v80xjmx68n4w.cloudfront.net/gigs/cbjr21565491229.jpg?width=400&height=2991;
+    let img = 'https://cdn.discordapp.com/attachments/717205181502324868/717207192695996557/cbjr21565491229_1.jpg';
     var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
     embed.setColor('#186de6')
-    embed.setAuthor('server info of 문이봇 BOT', img)
-    embed.setFooter(`문이봇 BOT ❤️`)
+    embed.setAuthor('서버 상태 of 문이 BOT', img)
+    embed.setFooter(`문이 BOT ❤️`)
     embed.addBlankField()
     embed.addField('RAM usage',    `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true);
     embed.addField('running time', `${duration}`, true);
@@ -70,9 +77,9 @@ client.on('message', (message) => {
   }
 
   if(message.content == 'embed') {
-    let img = 'https://lh3.googleusercontent.com/H4wvTGI708-4yUH_KG9FCYqmNgXPgN_fZTG_Upb7nWUuNW-4mUYsxlOsKhgb6DG7HlB6LKI=s114tps://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
+    let img = 'https://cdn.discordapp.com/attachments/717205181502324868/717207192695996557/cbjr21565491229_1.jpg';
     let embed = new Discord.RichEmbed()
-      .setTitle('타이틀')
+      .setTitle('제목')
       .setURL('http://www.naver.com')
       .setAuthor('! MOON 문이', img, 'http://www.naver.com')
       .setThumbnail(img)
@@ -84,26 +91,26 @@ client.on('message', (message) => {
       .addField('Inline field title', 'Some value here1\nSome value here2\nSome value here3\n')
       .addBlankField()
       .setTimestamp()
-      .setFooter('! MOON 문이', img)
+      .setFooter('! MOON 문이가 만듬', img)
 
     message.channel.send(embed)
   } else if(message.content == '!help') {
     let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
     let commandList = [
-      {name: '관리자를 위한 도움말', desc: '!help를 처보세요!'},
-      {name: '!help', desc: '봇 도움말'},
-      {name: 'ping', desc: '봇 핑 상태(현재 봇의 핑 (응답속도를)나타내요'},
-      {name: 'embed', desc: 'embed 예제1(전체공지2 할때 embed 형식 예제입니다'},
-      {name: '!전체공지', desc: '흔이 쓰는 DM 공지입니다. embed X'},
-      {name: '!전체공지2', desc: '샵 사장님들이 가장 많이쓰시는 embed 형식의 공지입니다. 디자인되서 디엠전송이 됩니다'},
-      {name: '!청소', desc: '텍스트를 삭제합니다'},
-      {name: '!초대코드', desc: '이 서버에 초대코드를 표시합니다'},
+      {name: '!help', desc: 'help'},
+      {name: 'ping', desc: '현재 핑 상태'},
+      {name: 'embed', desc: 'embed 예제1'},
+      {name: '!전체공지', desc: 'dm으로 전체 공지 보내기'},
+      {name: '!전체공지2', desc: 'dm으로 전체 embed 형식으로 공지 보내기'},
+      {name: '!청소', desc: '텍스트 지움'},
+      {name: '!초대코드', desc: '해당 채널의 초대 코드 표기'},
+      {name: '!초대코드2', desc: '봇이 들어가있는 모든 채널의 초대 코드 표기'},
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
-      .setAuthor('Help of 문이 BOT', helpImg)
+      .setAuthor('도움말 of 문이 BOT', helpImg)
       .setColor('#186de6')
-      .setFooter(`!MOON 문이 BOT ❤️`)
+      .setFooter(`문이 BOT ❤️`)
       .setTimestamp()
     
     commandList.forEach(x => {
@@ -143,9 +150,9 @@ client.on('message', (message) => {
     if(message.member != null) { // 채널에서 공지 쓸 때
       let contents = message.content.slice('!전체공지2'.length);
       let embed = new Discord.RichEmbed()
-        .setAuthor('공지 of 문이 BOT')
+        .setAuthor('공지 of 콜라곰 BOT')
         .setColor('#186de6')
-        .setFooter(`문이 BOT ❤️`)
+        .setFooter(`콜라곰 BOT ❤️`)
         .setTimestamp()
   
       embed.addField('공지: ', contents);
@@ -239,6 +246,76 @@ async function AutoMsgDelete(message, str, delay = 3000) {
   setTimeout(() => {
     msg.delete();
   }, delay);
+}
+
+function getEmbedFields(message, modify=false) {
+  if(message.content == '' && message.embeds.length > 0) {
+    let e = message.embeds[0].fields;
+    let a = [];
+
+    for(let i=0;i<e.length;i++) {
+        a.push(`\`${e[i].name}\` - \`${e[i].value}\`\n`);
+    }
+
+    return a.join('');
+  } else if(modify) {
+    return message.author.lastMessage.content;
+  } else {
+    return message.content;
+  }
+}
+
+function MessageSave(message, modify=false) {
+  imgs = []
+  if (message.attachments.array().length > 0) {
+    message.attachments.array().forEach(x => {
+      imgs.push(x.url+'\n')
+    });
+  }
+
+  username = message.author.username.match(/[\u3131-\uD79D^a-zA-Z^0-9]/ugi)
+  channelName = message.channel.type != 'dm' ? message.channel.name : ''
+  try {
+    username = username.length > 1 ? username.join('') : username
+  } catch (error) {}
+
+  try {
+    channelName = channelName.length > 1 ? channelName.join('') : channelName
+  } catch (error) {}
+
+  var s = {
+    ChannelType: message.channel.type,
+    ChannelId: message.channel.type != 'dm' ? message.channel.id : '',
+    ChannelName: channelName,
+    GuildId: message.channel.type != 'dm' ? message.channel.guild.id : '',
+    GuildName: message.channel.type != 'dm' ? message.channel.guild.name : '',
+    Message: getEmbedFields(message, modify),
+    AuthorId: message.author.id,
+    AuthorUsername: username + '#' + message.author.discriminator,
+    AuthorBot: Number(message.author.bot),
+    Embed: Number(message.embeds.length > 0), // 0이면 false 인거다.
+    CreateTime: momenttz().tz('Asia/Seoul').locale('ko').format('ll dddd LTS')
+  }
+
+  s.Message = (modify ? '[수정됨] ' : '') + imgs.join('') + s.Message
+
+  MessageAdd(
+    s.ChannelType,
+    s.ChannelId,
+    s.ChannelName,
+    s.GuildId,
+    s.GuildName,
+    s.Message,
+    s.AuthorId,
+    s.AuthorUsername,
+    s.AuthorBot,
+    s.Embed,
+    s.CreateTime,
+  )
+    // .then((res) => {
+    //   console.log('db 저장을 했다.', res);
+    // })
+    .catch(error => console.log(error))
 }
 
 
